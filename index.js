@@ -15,11 +15,27 @@ elements.button.addEventListener("click", onClickButton);
 
 function onClickButton(evt) {
   elements.list.innerHTML = "";
-
   const value = elements.input.value;
   const atomization = value.split("");
 
-  const listСreation = atomization.map((elem) =>
-    elements.list.insertAdjacentHTML("beforeend", `<li>${elem}</li>`)
-  );
+  for (let i = 0; i < atomization.length; i++) {
+    const element = atomization[i];
+
+    elements.list.insertAdjacentHTML(
+      "beforeend",
+      `<li id=${i}>${element}</li>`
+    );
+  }
+
+  elements.list.addEventListener("click", onClickItemList);
+}
+
+function onClickItemList(evtLi) {
+  window.document.addEventListener("click", function (evtWindow) {
+    console.log(evtLi);
+    console.log(evtWindow);
+    evtLi.target.style.position = "absolute";
+    evtLi.target.style.top = `${evtWindow.pageY}px`;
+    evtLi.target.style.left = `${evtWindow.pageX}px`;
+  });
 }
